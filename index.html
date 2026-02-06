@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>CyberNews - Security News & Threat Intel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('theme-light');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <!-- Navbar: top row = language, RSS, Subscribe, theme, search; bottom row = logo + nav links -->
+  <nav class="navbar">
+    <div class="nav-top">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select-native" aria-label="Language">
+          <option value="en" selected>English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+          <option value="zh">中文</option>
+          <option value="ru">Русский</option>
+          <option value="ar">العربية</option>
+          <option value="az">Azərbaycan</option>
+        </select>
+        <div class="lang-select-trigger" id="langTrigger" aria-expanded="false" aria-haspopup="listbox">
+          <i class="fas fa-globe lang-icon"></i>
+          <span class="lang-current" data-short="EN">EN</span>
+          <i class="fas fa-chevron-down lang-arrow"></i>
+        </div>
+        <div class="lang-dropdown" id="langDropdown" role="listbox">
+          <div class="lang-option selected" data-lang="en" data-short="EN" role="option">English</div>
+          <div class="lang-option" data-lang="es" data-short="ES" role="option">Español</div>
+          <div class="lang-option" data-lang="fr" data-short="FR" role="option">Français</div>
+          <div class="lang-option" data-lang="de" data-short="DE" role="option">Deutsch</div>
+          <div class="lang-option" data-lang="ja" data-short="JA" role="option">日本語</div>
+          <div class="lang-option" data-lang="zh" data-short="ZH" role="option">中文</div>
+          <div class="lang-option" data-lang="ru" data-short="RU" role="option">Русский</div>
+          <div class="lang-option" data-lang="ar" data-short="AR" role="option">العربية</div>
+          <div class="lang-option" data-lang="az" data-short="AZ" role="option">Azərbaycan</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <div class="nav-rss-wrap">
+          <button type="button" class="nav-rss-btn" id="rssTrigger" aria-expanded="false" aria-haspopup="true">
+            <i class="fas fa-rss nav-rss-icon"></i> RSS <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="nav-rss-dropdown" id="rssDropdown" role="menu">
+            <a href="#" class="nav-rss-option">All feeds</a>
+            <a href="#" class="nav-rss-option">Breaking</a>
+            <a href="#" class="nav-rss-option">Threat Intel</a>
+            <a href="#" class="nav-rss-option">Malware</a>
+          </div>
+        </div>
+        <button type="button" class="nav-subscribe-btn" aria-label="Subscribe">
+          <i class="fas fa-bell"></i> <span data-i18n-key="nav.subscribe">Subscribe</span>
+        </button>
+        <button type="button" class="nav-theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun theme-icon"></i>
+        </button>
+      </div>
+    </div>
+    <div class="nav-bottom">
+      <a href="#" class="nav-brand">
+        <span class="brand-logo-box"><i class="fas fa-shield-alt brand-icon"></i></span>
+        <span class="brand-text"><span class="brand-cyber">Cyber</span><span class="brand-news">News</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#breaking"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span> <span data-i18n-key="nav.breaking">Breaking</span></a></li>
+        <li><a href="#threat-intel"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L4 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span> <span data-i18n-key="nav.threatIntel">Threat Intel</span></a></li>
+        <li><a href="#malware"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-2.2 0-4 1.8-4 4 0 1.2.5 2.3 1.3 3.1-.9 1.1-2 2-3.3 2.5v2c1.5-.5 3.2-1.1 4.5-2.5 1.3 1.4 3 2 4.5 2.5v-2c-1.3-.5-2.4-1.4-3.3-2.5.8-.8 1.3-1.9 1.3-3.1 0-2.2-1.8-4-4-4z"/><circle cx="9" cy="15" r="1.2"/><circle cx="15" cy="15" r="1.2"/><path d="M7 10l-2 1.5"/><path d="M17 10l2 1.5"/></svg></span> <span data-i18n-key="nav.malware">Malware</span></a></li>
+        <li><a href="#apt"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span> <span data-i18n-key="nav.apt">APT</span></a></li>
+        <li><a href="#breaches"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></span> <span data-i18n-key="nav.breaches">Breaches</span></a></li>
+        <li><a href="#pentest"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span> <span data-i18n-key="nav.pentest">Pentest</span></a></li>
+        <li><a href="#bug-bounty" class="active"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-2.2 0-4 1.8-4 4 0 1.2.5 2.3 1.3 3.1-.9 1.1-2 2-3.3 2.5v2c1.5-.5 3.2-1.1 4.5-2.5 1.3 1.4 3 2 4.5 2.5v-2c-1.3-.5-2.4-1.4-3.3-2.5.8-.8 1.3-1.9 1.3-3.1 0-2.2-1.8-4-4-4z"/><circle cx="9" cy="15" r="1.2"/><circle cx="15" cy="15" r="1.2"/><path d="M7 10l-2 1.5"/><path d="M17 10l2 1.5"/></svg></span> <span data-i18n-key="nav.bugBounty">Bounty</span></a></li>
+        <li class="nav-more-wrap">
+          <button type="button" class="nav-more-btn" id="moreTrigger" aria-expanded="false" aria-haspopup="true"><span class="nav-more-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg></span> <span data-i18n-key="nav.more">More</span> <span class="nav-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+          <div class="more-dropdown-card" id="moreDropdown" role="menu">
+            <button type="button" class="more-card-option" data-category="deep-dives" role="menuitem"><i class="fas fa-book-open"></i> <span data-i18n-key="more.deepDives">Deep Dives</span></button>
+            <button type="button" class="more-card-option" data-category="beginner" role="menuitem"><i class="fas fa-graduation-cap"></i> <span data-i18n-key="more.beginner">Beginner</span></button>
+            <button type="button" class="more-card-option" data-category="research" role="menuitem"><i class="fas fa-microscope"></i> <span data-i18n-key="more.research">Research</span></button>
+            <button type="button" class="more-card-option" data-category="dark-web" role="menuitem"><i class="fas fa-eye-slash"></i> <span data-i18n-key="more.darkWeb">Dark Web</span></button>
+          </div>
+        </li>
+      </ul>
+      <div class="search-box nav-bottom-search">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search news, IOCs, actors">
+        <span class="search-help-wrap" id="searchHelpWrap" aria-describedby="search-help-tooltip-popup">
+          <i class="fas fa-question-circle search-help" aria-hidden="true"></i>
+          <span class="search-help-tooltip search-help-tooltip-inline" id="search-help-tooltip" role="tooltip" aria-hidden="true">
+            <span class="search-help-tooltip-title">Search help</span>
+            <span class="search-help-tooltip-line">Breaking news, threat intel, malware</span>
+            <span class="search-help-tooltip-line">IOCs, threat actors, APT reports</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="layout">
+    <div class="content-area">
+      <!-- Breaking News Section -->
+      <section id="breaking" class="section breaking-section">
+        <div class="breaking-banner">
+          <span class="breaking-pill" data-i18n-key="badge.breaking">BREAKING</span>
+          <p class="breaking-headline">Critical Zero-Day in Popular VPN Software Being Actively Exploited <span class="breaking-time">19 minutes ago</span></p>
+          <div class="breaking-pagination"><span class="breaking-prev"><i class="fas fa-chevron-left"></i></span> <span class="breaking-counter">1/3</span> <span class="breaking-next"><i class="fas fa-chevron-right"></i></span></div>
+        </div>
+      </section>
+
+      <!-- Filter Section -->
+      <section id="threat-intel" class="section filter-section">
+        <div class="topic-tags">
+          <button class="tag-btn" data-i18n-key="tags.cve">CVE-2026-0001 (147)</button>
+          <button class="tag-btn" data-i18n-key="tags.ransomware">Ransomware (89)</button>
+          <button class="tag-btn" data-i18n-key="tags.apt29">APT29 (67)</button>
+          <button class="tag-btn" data-i18n-key="tags.zeroDay">Zero-Day (52)</button>
+          <button class="tag-btn" data-i18n-key="tags.supplyChain">Supply Chain (41)</button>
+          <button class="tag-btn" data-i18n-key="tags.cisa">CISA (38)</button>
+        </div>
+        <div class="filter-controls">
+          <label class="toggle-label">
+            <span data-i18n-key="filters.vendorNeutral">Vendor-neutral only</span>
+            <input type="checkbox" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+          <div class="filter-dropdown-wrap">
+            <button type="button" class="filter-btn filter-btn-time" id="timeTrigger" aria-expanded="false"><i class="far fa-clock"></i> <span class="filter-btn-label" data-i18n-key="filters.time.label">Last 24h</span></button>
+            <div class="filter-dropdown filter-dropdown-time" id="timeDropdown" role="listbox">
+              <div class="filter-dropdown-option" data-value="1h" role="option" data-i18n-key="filters.time.lastHour">Last hour</div>
+              <div class="filter-dropdown-option selected" data-value="24h" role="option" data-i18n-key="filters.time.last24h">Last 24h</div>
+              <div class="filter-dropdown-option" data-value="7d" role="option" data-i18n-key="filters.time.last7d">Last 7 days</div>
+              <div class="filter-dropdown-option" data-value="30d" role="option" data-i18n-key="filters.time.last30d">Last 30 days</div>
+              <div class="filter-dropdown-option" data-value="all" role="option" data-i18n-key="filters.time.all">All time</div>
+            </div>
+          </div>
+          <div class="filter-dropdown-wrap">
+            <button type="button" class="filter-btn filter-btn-type" id="typeTrigger" aria-expanded="false"><i class="fas fa-filter"></i> <span class="filter-btn-label" data-i18n-key="filters.type.label">News</span></button>
+            <div class="filter-dropdown filter-dropdown-type" id="typeDropdown" role="listbox">
+              <div class="filter-dropdown-option selected" data-value="news" role="option" data-i18n-key="filters.type.news">News</div>
+              <div class="filter-dropdown-option" data-value="analysis" role="option" data-i18n-key="filters.type.analysis">Analysis</div>
+              <div class="filter-dropdown-option" data-value="report" role="option" data-i18n-key="filters.type.report">Report</div>
+              <div class="filter-dropdown-option" data-value="advisory" role="option" data-i18n-key="filters.type.advisory">Advisory</div>
+            </div>
+          </div>
+          <div class="filter-dropdown-wrap">
+            <button type="button" class="filter-btn filter-btn-sources" id="sourcesTrigger" aria-expanded="false"><span class="filter-btn-label" data-i18n-key="filters.sources.label">Sources</span></button>
+            <div class="filter-dropdown filter-dropdown-sources" id="sourcesDropdown" role="listbox">
+              <div class="filter-dropdown-option selected" data-value="all" role="option" data-i18n-key="filters.sources.all">All Sources</div>
+              <div class="filter-dropdown-option" data-value="news" role="option" data-i18n-key="filters.sources.news">News</div>
+              <div class="filter-dropdown-option" data-value="analysis" role="option" data-i18n-key="filters.sources.analysis">Analysis</div>
+              <div class="filter-dropdown-option" data-value="report" role="option" data-i18n-key="filters.sources.report">Report</div>
+              <div class="filter-dropdown-option" data-value="advisory" role="option" data-i18n-key="filters.sources.advisory">Advisory</div>
+            </div>
+          </div>
+          <div class="filter-clear-wrapper">
+            <button type="button" class="filter-clear-btn" id="filterClearBtn" aria-label="Clear all filters" title="Clear all filters">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="filter-count" id="filterCount">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- News Grid Section -->
+      <section id="malware" class="section news-section">
+        <h2 class="section-title" data-i18n-key="sections.latestNews">Latest Security News</h2>
+        <div class="news-grid" id="newsGrid">
+          <!-- News cards injected by JS -->
+        </div>
+        <div class="load-indicator" id="loadIndicator">
+          <div class="spinner"></div>
+          <span data-i18n-key="loading.moreNews">Loading more news...</span>
+        </div>
+      </section>
+
+      <!-- APT Section -->
+      <section id="apt" class="section apt-section">
+        <h2 class="section-title" data-i18n-key="sections.aptTitle">APT & Advanced Threats</h2>
+        <p class="section-desc" data-i18n-key="sections.aptDesc">Analysis and reports on advanced persistent threat groups.</p>
+      </section>
+
+      <!-- Breaches Section -->
+      <section id="breaches" class="section breaches-section">
+        <h2 class="section-title" data-i18n-key="sections.breachesTitle">Data Breaches</h2>
+        <p class="section-desc" data-i18n-key="sections.breachesDesc">Tracking major data breach incidents and disclosures.</p>
+      </section>
+
+      <!-- Pentest Section -->
+      <section id="pentest" class="section pentest-section">
+        <h2 class="section-title" data-i18n-key="sections.pentestTitle">Penetration Testing</h2>
+        <p class="section-desc" data-i18n-key="sections.pentestDesc">Tools, methodologies, and pentest news.</p>
+      </section>
+
+      <!-- Bug Bounty Section -->
+      <section id="bug-bounty" class="section bugbounty-section">
+        <h2 class="section-title" data-i18n-key="sections.bountyTitle">Bug Bounty</h2>
+        <p class="section-desc" data-i18n-key="sections.bountyDesc">Program updates and vulnerability disclosures.</p>
+      </section>
+
+      <!-- More Section -->
+      <section id="more" class="section more-section">
+        <h2 class="section-title" data-i18n-key="sections.moreTitle">More</h2>
+        <p class="section-desc" data-i18n-key="sections.moreDesc">Additional resources and categories.</p>
+      </section>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-card newsletter-card">
+        <button class="sidebar-close" aria-label="Close"><i class="fas fa-times"></i></button>
+        <h3><i class="fas fa-envelope"></i> <span data-i18n-key="sidebar.newsletterTitle">Newsletter</span></h3>
+        <p data-i18n-key="sidebar.newsletterText">Get daily or weekly security digests delivered to your inbox.</p>
+        <input type="email" placeholder="your@email.com" class="newsletter-input">
+        <div class="newsletter-freq">
+          <button class="freq-btn active" data-i18n-key="sidebar.daily">Daily</button>
+          <button class="freq-btn" data-i18n-key="sidebar.weekly">Weekly</button>
+        </div>
+        <p class="newsletter-disclaimer" data-i18n-key="sidebar.newsletterDisclaimer">By subscribing, you agree to our privacy policy. Unsubscribe anytime.</p>
+      </div>
+      <div class="sidebar-card digest-card">
+        <h3 data-i18n-key="sidebar.digestTitle">Today's Digest</h3>
+        <ol class="digest-list">
+          <li data-i18n-key="sidebar.digestItem1">Critical VPN zero-day under active exploitation</li>
+          <li data-i18n-key="sidebar.digestItem2">New ransomware variant targets healthcare sector</li>
+          <li data-i18n-key="sidebar.digestItem3">APT29 campaign linked to recent breaches</li>
+          <li data-i18n-key="sidebar.digestItem4">CISA releases emergency directive for federal agencies</li>
+          <li data-i18n-key="sidebar.digestItem5">Major bug bounty program doubles payouts</li>
+        </ol>
+      </div>
+    </aside>
+  </main>
+
+  <!-- News details modal -->
+  <div class="news-modal" id="newsModal" aria-hidden="true">
+    <div class="news-modal__backdrop" data-modal-close="true"></div>
+    <div class="news-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+      <button type="button" class="news-modal__close" aria-label="Close" data-modal-close="true">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="news-modal__content">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip rendered on body so it always appears on top -->
+  <div id="search-help-tooltip-popup" class="search-help-tooltip-popup" role="tooltip" aria-hidden="true">
+    <span class="search-help-tooltip-title">Search help</span>
+    <span class="search-help-tooltip-line">Breaking news, threat intel, malware</span>
+    <span class="search-help-tooltip-line">IOCs, threat actors, APT reports</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

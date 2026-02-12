@@ -1,0 +1,630 @@
+/* ===== Navbar ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  box-sizing: border-box;
+}
+
+.navbar.scrolled {
+  background: rgba(22, 27, 34, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Top row: language (left), RSS + Subscribe + theme + search (right) */
+.nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  min-height: 44px;
+  position: relative;
+  z-index: 10002; /* above nav-bottom and main so dropdowns (RSS, lang) stay on top */
+}
+
+/* Bottom row: logo + nav links + search */
+.nav-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  min-height: 48px;
+  min-width: 0;
+  position: relative;
+  z-index: 10001; /* below nav-top so top-row dropdowns appear above this row */
+}
+
+.nav-bottom .search-box.nav-bottom-search {
+  flex-shrink: 0;
+  min-width: 200px;
+  max-width: 280px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--transition);
+}
+
+.nav-brand:hover {
+  opacity: 0.9;
+}
+
+.brand-logo-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--accent-green);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  color: #fff;
+  font-size: 1.1rem;
+  transition: transform var(--transition);
+}
+
+.nav-brand:hover .brand-icon {
+  transform: scale(1.05);
+}
+
+.brand-text {
+  white-space: nowrap;
+}
+
+.brand-cyber {
+  color: #56d4dd;
+  font-weight: 700;
+}
+
+.brand-news {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+  position: relative;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-links::-webkit-scrollbar,
+.nav-links::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-link-icon {
+  color: var(--text-muted);
+  display: inline-flex !important; /* ensure icons always show next to all nav buttons */
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 16px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.nav-link-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: inherit;
+}
+
+/* Filled icons (fallback) */
+.nav-link-icon svg:not(.nav-icon-outline) {
+  fill: currentColor;
+}
+
+/* Outline-style icons (lightning, shield, bug, target, breaches, etc.) */
+.nav-link-icon svg.nav-icon-outline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5px;
+}
+
+.nav-link-icon svg.nav-icon-outline circle[fill="currentColor"] {
+  fill: currentColor;
+  stroke: none;
+}
+
+.nav-link-icon .fas,
+.nav-link-icon .far,
+.nav-link-icon .fab {
+  font-size: 0.875rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Font Awesome 6: icon on the element itself (span) */
+.nav-link-icon.fa-solid,
+.nav-link-icon.fa-regular,
+.nav-link-icon.fa-brands {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";
+  font-weight: 900;
+  font-size: 0.875rem;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.nav-link-icon.fa-regular { font-weight: 400; }
+.nav-link-icon.fa-brands { font-family: "Font Awesome 6 Brands"; font-weight: 400; }
+
+.nav-links a:hover {
+  color: #fff;
+  background: #1197DE;
+}
+
+.nav-links a:hover .nav-link-icon,
+.nav-links a:hover .nav-link-icon svg {
+  color: #fff;
+}
+
+.nav-links a:hover .nav-link-icon svg:not(.nav-icon-outline) {
+  fill: currentColor;
+}
+
+.nav-links a:hover .nav-link-icon svg.nav-icon-outline {
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Bounty/active link: same as default (no blue bg); hover turns blue like others */
+.nav-links a.active {
+  color: var(--text);
+  background: none;
+}
+
+.nav-links a.active .nav-link-icon {
+  color: var(--text-muted);
+}
+
+.nav-links a.active:hover {
+  color: #fff;
+  background: #1197DE;
+}
+
+.nav-links a.active:hover .nav-link-icon,
+.nav-links a.active:hover .nav-link-icon svg {
+  color: #fff;
+}
+
+.nav-links a.active:hover .nav-link-icon svg.nav-icon-outline {
+  stroke: currentColor;
+  fill: none;
+}
+
+/* More button in navbar */
+.nav-more-wrap {
+  position: relative;
+  z-index: 2147483647 !important; /* maximum safe integer z-index */
+}
+
+.nav-more-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+  position: relative;
+  z-index: 2147483647 !important;
+  pointer-events: auto;
+}
+
+.nav-more-btn:hover {
+  color: #fff;
+  background: #1197DE;
+}
+
+.nav-more-btn:hover .nav-more-icon,
+.nav-more-btn:hover .nav-chevron {
+  color: #fff;
+}
+
+.nav-more-btn[aria-expanded="true"] {
+  color: #fff;
+  background: #1197DE;
+}
+
+.nav-more-btn[aria-expanded="true"] .nav-more-icon,
+.nav-more-btn[aria-expanded="true"] .nav-chevron {
+  color: #fff;
+}
+
+.nav-more-icon {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  margin-right: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+.nav-more-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.nav-chevron {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: transform var(--transition);
+}
+
+.nav-chevron svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.nav-more-btn[aria-expanded="true"] .nav-chevron {
+  transform: rotate(180deg);
+}
+
+/* More dropdown card (Deep Dives, Beginner, Research, Dark Web) */
+.more-dropdown-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 200px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.35rem 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 2147483647 !important;
+  pointer-events: none;
+}
+
+.more-dropdown-card.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 2147483647 !important;
+}
+
+.more-card-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.more-card-option i {
+  color: var(--text-muted);
+  width: 1.1em;
+}
+
+.more-card-option:hover {
+  background: #1197DE;
+}
+
+.more-card-option.active {
+  background: #1197DE;
+  color: #ffffff;
+}
+
+.more-card-option.active i {
+  color: var(--accent-blue);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  min-width: 0;
+  overflow: visible;
+  scrollbar-width: none !important;
+  position: relative;
+  z-index: 10000 !important;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* RSS dropdown */
+.nav-rss-wrap {
+  position: relative;
+  z-index: 100001;
+}
+
+.nav-rss-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-rss-btn:hover {
+  color: #fff;
+  background: #1197DE;
+}
+
+.nav-rss-btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.nav-rss-btn[aria-expanded="true"] {
+  outline: 2px solid rgba(88, 166, 255, 0.9);
+  outline-offset: 2px;
+  background: rgba(17, 151, 222, 0.2);
+}
+
+.nav-rss-btn i:last-child {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.nav-rss-icon {
+  color: var(--text);
+}
+
+.nav-rss-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  min-width: 140px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.35rem 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 2147483647 !important;
+  pointer-events: none;
+}
+
+.nav-rss-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-rss-option {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background var(--transition);
+}
+
+.nav-rss-option:hover,
+.nav-rss-option:focus {
+  background: #1197DE;
+  color: #fff;
+  outline: none;
+}
+
+.nav-rss-option:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: -2px;
+}
+
+/* Subscribe button (green) */
+.nav-subscribe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--accent-green);
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-subscribe-btn:hover {
+  color: #7ee787;
+  background: rgba(63, 185, 80, 0.15);
+}
+
+.nav-subscribe-btn i {
+  font-size: 0.95rem;
+}
+
+/* Theme toggle */
+.nav-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+  position: relative;
+  overflow: visible;
+}
+
+.nav-theme-toggle:hover {
+  background: var(--bg-elevated);
+  transform: scale(1.08);
+}
+/* Sun: yellow on hover (dark mode) */
+button.nav-theme-toggle:hover .theme-icon-sun circle {
+  fill: #f5c542 !important;
+}
+button.nav-theme-toggle:hover .theme-icon-sun line {
+  stroke: #f5c542 !important;
+}
+.theme-icon-sun circle,
+.theme-icon-sun line {
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+/* Moon: dark blue on hover (light mode) */
+html.theme-light button.nav-theme-toggle:hover .theme-icon-moon path {
+  fill: #1a237e !important;
+  stroke: #1a237e !important;
+}
+.theme-icon-moon path {
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.nav-theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.25s ease;
+}
+
+.theme-icon svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Dark mode: only sun visible, moon hidden */
+.theme-icon-sun {
+  display: block !important;
+  visibility: visible !important;
+}
+.theme-icon-moon {
+  display: none !important;
+  visibility: hidden !important;
+}
+/* Light mode: only moon visible, sun hidden */
+html.theme-light .theme-icon-sun {
+  display: none !important;
+  visibility: hidden !important;
+}
+html.theme-light .theme-icon-moon {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.theme-icon.theme-icon-animate {
+  animation: theme-icon-spin 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+@keyframes theme-icon-spin {
+  0% { transform: rotate(0deg); opacity: 1; }
+  50% { transform: rotate(180deg); opacity: 0; }
+  100% { transform: rotate(360deg); opacity: 1; }
+}
+
+.navbar {
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.nav-actions::-webkit-scrollbar,
+.nav-actions::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

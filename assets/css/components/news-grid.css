@@ -1,0 +1,147 @@
+/* ===== News Grid ===== */
+.news-section .section-title {
+  margin-bottom: 1rem;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.news-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  transition: all var(--transition);
+  animation: cardIn 0.5s ease backwards;
+  cursor: pointer;
+}
+
+.news-card:hover {
+  border-color: var(--accent-green);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.card-tag.cisa { border: 1px solid var(--accent-blue); color: var(--accent-blue); }
+.card-tag.critical { background: var(--accent-red); color: white; }
+.card-tag.mandiant { color: var(--accent-purple); }
+.card-tag.report { color: var(--accent-green); }
+.card-tag.high { color: var(--accent-orange); }
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.card-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-keyword {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+.card-keyword.highlight {
+  color: var(--accent-orange);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-meta i {
+  margin-right: 0.25rem;
+}
+
+.card-read {
+  background: none;
+  border: none;
+  color: var(--accent-green);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+
+.card-read:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Load indicator */
+.load-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.load-indicator.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+

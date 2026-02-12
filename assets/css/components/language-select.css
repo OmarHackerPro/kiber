@@ -1,0 +1,208 @@
+﻿/* ===== Animated Language Select ===== */
+.lang-select-wrapper {
+  position: relative;
+  z-index: 99999 !important; /* extremely high z-index to ensure dropdown appears above everything */
+}
+
+/* Native select hidden but present for semantics; animated UI used for display */
+.lang-select-native {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  border: none;
+  outline: none;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.lang-select-native:focus {
+  outline: none;
+  border: none;
+}
+
+.lang-select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.65rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: auto;
+  max-width: none;
+  flex-shrink: 0;
+  transition: all var(--transition);
+  user-select: none;
+  position: relative;
+  z-index: 99999 !important;
+}
+
+.lang-select-trigger:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+.lang-select-wrapper:hover .lang-select-trigger {
+  border-color: var(--border);
+}
+
+.lang-select-trigger[aria-expanded="true"] {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.3);
+}
+
+.lang-select-trigger[aria-expanded="true"] .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-icon {
+  color: var(--text);
+  font-size: 1rem;
+  transition: transform var(--transition);
+}
+
+.lang-select-trigger:hover .lang-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.lang-arrow {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.lang-dropdown {
+  position: fixed; /* will be set to fixed by JS to escape stacking contexts */
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* stronger shadow for visibility */
+  overflow-y: visible; /* prevent scrolling */
+  overflow-x: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transform-origin: top center;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.25s;
+  z-index: 2147483647 !important; /* maximum z-index value (max safe integer) to ensure it's always on top */
+  max-height: none; /* no max height to prevent scrolling */
+  pointer-events: none; /* prevent clicks when hidden */
+}
+
+/* Hide scrollbar for language dropdown but keep scrolling */
+.lang-dropdown {
+  scrollbar-width: none; /* Firefox */
+}
+
+.lang-dropdown::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+.lang-dropdown::-webkit-scrollbar-track,
+.lang-dropdown::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: none;
+  display: none;
+}
+
+.lang-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  max-height: none; /* no max height to prevent scrolling */
+  pointer-events: auto; /* ensure dropdown is clickable */
+  z-index: 2147483647 !important; /* ensure it stays on top when open */
+}
+
+.lang-dropdown.lang-dropdown-closing {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.lang-option {
+  padding: 0.35rem 0.75rem; /* more compact padding to fit all languages */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  animation: langOptionIn 0.4s ease backwards;
+  font-size: 0.85rem; /* slightly smaller font */
+}
+
+.lang-dropdown.open .lang-option:nth-child(1) { animation-delay: 0.02s; }
+.lang-dropdown.open .lang-option:nth-child(2) { animation-delay: 0.04s; }
+.lang-dropdown.open .lang-option:nth-child(3) { animation-delay: 0.06s; }
+.lang-dropdown.open .lang-option:nth-child(4) { animation-delay: 0.08s; }
+.lang-dropdown.open .lang-option:nth-child(5) { animation-delay: 0.1s; }
+.lang-dropdown.open .lang-option:nth-child(6) { animation-delay: 0.12s; }
+.lang-dropdown.open .lang-option:nth-child(7) { animation-delay: 0.14s; }
+.lang-dropdown.open .lang-option:nth-child(8) { animation-delay: 0.16s; }
+
+@keyframes langOptionIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.lang-option:hover {
+  background: var(--bg-elevated);
+  border-left-color: var(--accent-green);
+  padding-left: 1.25rem;
+}
+
+.lang-option.selected {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--accent-green);
+  border-left-color: var(--accent-green);
+}
+
+.lang-option {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, padding 0.2s ease, background 0.2s ease, border-left-color 0.2s ease;
+}
+
+/* Ripple effect on language option click */
+.lang-ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  background: rgba(63, 185, 80, 0.5);
+  border-radius: 50%;
+  animation: rippleExpand 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleExpand {
+  to {
+    transform: scale(15);
+    opacity: 0;
+  }
+}
+
+.lang-current {
+  transition: transform 0.2s ease;
+}
+

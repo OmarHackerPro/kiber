@@ -1,0 +1,15 @@
+/* CyberNews - Main stylesheet (imports by layer: base → layout → components) */
+/* Base: variables, reset, theme */
+@import url('../base/variables.css');
+/* Layout: page structure, navbar */
+@import url('../layout/layout.css');
+@import url('../layout/navbar.css');
+/* Components */
+@import url('../components/language-select.css');
+@import url('../components/search.css');
+@import url('../components/sections.css');
+@import url('../components/breaking.css');
+@import url('../components/filters.css');
+@import url('../components/news-grid.css');
+@import url('../components/news-modal.css');
+@import url('../components/sidebar.css');

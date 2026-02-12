@@ -1,0 +1,109 @@
+﻿/* ===== Sidebar Cards ===== */
+.sidebar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  position: relative;
+  z-index: 1; /* low z-index to ensure it stays below dropdowns */
+}
+
+.sidebar-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar-card h3 i {
+  color: var(--accent-green);
+}
+
+.sidebar-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color var(--transition);
+}
+
+.sidebar-close:hover {
+  color: var(--text);
+}
+
+.newsletter-card.hidden {
+  display: none;
+}
+
+.newsletter-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.newsletter-input:focus {
+  border-color: var(--accent-green);
+}
+
+.newsletter-freq {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.freq-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.freq-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.freq-btn.active {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: white;
+}
+
+.newsletter-disclaimer {
+  font-size: 0.75rem !important;
+  opacity: 0.8;
+}
+
+.digest-list {
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.digest-list li {
+  margin-bottom: 0.25rem;
+}

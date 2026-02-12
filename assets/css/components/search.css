@@ -1,0 +1,132 @@
+﻿/* ===== Search Box ===== */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 180px; /* reduced min-width */
+  max-width: 220px; /* add max-width to prevent overflow */
+  flex-shrink: 1; /* allow shrinking if needed */
+  overflow: visible; /* ensure input is fully visible */
+  position: relative; /* ensure proper positioning */
+}
+
+.search-box input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  width: 100%; /* ensure full width */
+  min-width: 0; /* allow shrinking */
+  overflow: visible; /* ensure text is visible */
+}
+
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-box i:first-child {
+  color: var(--text-muted);
+}
+
+/* Search help (?) icon with hover tooltip */
+.search-help-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100002;
+  cursor: pointer;
+}
+
+.search-help {
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.search-help-wrap:hover .search-help {
+  color: #1197DE !important; /* blue when hovering */
+}
+
+/* Inline tooltip hidden â€“ we use body-level popup so itâ€™s never behind anything */
+.search-help-tooltip-inline {
+  display: none !important;
+}
+
+/* Body-level tooltip â€“ always on top, positioned by JS */
+.search-help-tooltip-popup {
+  position: fixed;
+  z-index: 2147483647 !important;
+  width: 240px;
+  min-width: 220px;
+  max-width: 280px;
+  padding: 0.65rem 0.9rem 0.75rem;
+  background: #f0f6fc;
+  border: 1px solid #8b949e;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.search-help-tooltip-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-help-tooltip-popup::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: #8b949e;
+}
+
+.search-help-tooltip-popup::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  margin-bottom: -1px;
+  border: 5px solid transparent;
+  border-bottom-color: #f0f6fc;
+}
+
+.search-help-tooltip-popup .search-help-tooltip-title,
+.search-help-tooltip-popup .search-help-tooltip-line {
+  color: #1f2328;
+}
+
+.search-help-tooltip-popup .search-help-tooltip-line {
+  color: #424a53;
+}
+
+.search-help-tooltip-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1f2328;
+  margin-bottom: 0.1rem;
+}
+
+.search-help-tooltip-line {
+  color: #424a53;
+  font-size: 0.8rem;
+}
+

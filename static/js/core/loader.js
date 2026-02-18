@@ -1,10 +1,10 @@
 /**
  * Loads page from partials (layout/ + components/) and scripts in dependency order.
- * Serve over HTTP (e.g. npx serve . or python -m http.server).
+ * Served by FastAPI — run: uvicorn main:app --reload
  */
 (function() {
-  var partialsBase = 'assets/partials/';
-  var jsBase = 'assets/js/';
+  var partialsBase = '/static/partials/';
+  var jsBase = '/static/js/';
 
   function fetchHtml(path) {
     return fetch(partialsBase + path).then(function(r) {
@@ -82,7 +82,7 @@
   }
 
   injectPartials().catch(function(err) {
-    document.body.innerHTML = '<p style="padding:2rem;color:#f85149;">Could not load page. Serve the site over HTTP (e.g. <code>npx serve .</code> or <code>python -m http.server</code>).</p>';
+    document.body.innerHTML = '<p style="padding:2rem;color:#f85149;">Could not load page. Start the server: <code>uvicorn main:app --reload</code></p>';
     console.error(err);
   });
 })();

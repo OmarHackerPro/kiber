@@ -1,14 +1,15 @@
 /**
- * Build script: generates index.html from assets/partials/
+ * Build script: regenerates templates/index.html from static/partials/
  * Run: node build.js
- * No index.html exists until you run this.
+ * NOTE: The FastAPI app (main.py) serves templates/index.html directly.
+ *       Only run this if you need to rebuild the template from partials.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname;
-const PARTIALS = path.join(ROOT, 'assets', 'partials');
+const PARTIALS = path.join(ROOT, 'static', 'partials');
 
 function read(relativePath) {
   return fs.readFileSync(path.join(PARTIALS, relativePath), 'utf8').trim();
@@ -37,20 +38,20 @@ ${sidebar}
 
 ${modals}
 
-<script src="assets/js/data/translations.js"></script>
-<script src="assets/js/components/nav.js"></script>
-<script src="assets/js/components/language.js"></script>
-<script src="assets/js/components/theme.js"></script>
-<script src="assets/js/components/rss.js"></script>
-<script src="assets/js/components/search-tooltip.js"></script>
-<script src="assets/js/components/filters.js"></script>
-<script src="assets/js/features/news-grid.js"></script>
-<script src="assets/js/features/news-modal.js"></script>
-<script src="assets/js/features/breaking.js"></script>
-<script src="assets/js/features/sidebar.js"></script>
+<script src="/static/js/data/translations.js"></script>
+<script src="/static/js/components/nav.js"></script>
+<script src="/static/js/components/language.js"></script>
+<script src="/static/js/components/theme.js"></script>
+<script src="/static/js/components/rss.js"></script>
+<script src="/static/js/components/search-tooltip.js"></script>
+<script src="/static/js/components/filters.js"></script>
+<script src="/static/js/features/news-grid.js"></script>
+<script src="/static/js/features/news-modal.js"></script>
+<script src="/static/js/features/breaking.js"></script>
+<script src="/static/js/features/sidebar.js"></script>
 </body>
 </html>
 `;
 
-fs.writeFileSync(path.join(ROOT, 'index.html'), indexHtml, 'utf8');
-console.log('Built index.html from assets/partials/');
+fs.writeFileSync(path.join(ROOT, 'templates', 'index.html'), indexHtml, 'utf8');
+console.log('Built templates/index.html from static/partials/');

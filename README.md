@@ -6,9 +6,19 @@ Security News & Threat Intelligence Platform — FastAPI backend, PostgreSQL dat
 
 ## Prerequisites
 
-- [Python 3.12+](https://www.python.org/downloads/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for the local database)
-- Git
+Git, Docker Desktop, and Python 3.13 are required. Run the script for your OS to install them all at once:
+
+**Windows** (PowerShell as Administrator):
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process; .\install-prereqs.ps1
+```
+
+**macOS / Linux**:
+```bash
+bash install-prereqs.sh
+```
+
+The scripts skip anything that's already installed. After running, **restart your machine** before continuing (Docker Desktop needs it on Windows).
 
 ---
 
@@ -89,6 +99,8 @@ kiber/
 ├── main.py                  # FastAPI app entry point
 ├── requirements.txt
 ├── docker-compose.yml       # Local Postgres
+├── install-prereqs.ps1      # One-command prereq installer (Windows)
+├── install-prereqs.sh       # One-command prereq installer (macOS/Linux)
 ├── .env.example             # Environment template — copy to .env
 ├── alembic.ini              # Alembic config
 ├── alembic/

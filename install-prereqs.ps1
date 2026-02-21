@@ -1,4 +1,4 @@
-# news.avild.com — Prerequisites Installer (Windows)
+# news.avild.com - Prerequisites Installer (Windows)
 # Run as Administrator in PowerShell:
 #   Set-ExecutionPolicy Bypass -Scope Process; .\install-prereqs.ps1
 
@@ -11,7 +11,7 @@ function Write-Ok    { param($msg) Write-Host "   [OK] $msg" -ForegroundColor Gr
 function Write-Skip  { param($msg) Write-Host "   [SKIP] $msg already installed." -ForegroundColor DarkGray }
 function Write-Fail  { param($msg) Write-Host "   [FAIL] $msg" -ForegroundColor Red }
 
-# ── winget check ────────────────────────────────────────────────────────────
+# --- winget check -----------------------------------------------------------
 if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
     Write-Fail "winget is not available."
     Write-Host "   Install 'App Installer' from the Microsoft Store, then re-run this script." -ForegroundColor Yellow
@@ -20,15 +20,15 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 
 Write-Host ""
 Write-Host "======================================" -ForegroundColor Cyan
-Write-Host "  news.avild.com  — prereqs installer" -ForegroundColor Cyan
+Write-Host "  news.avild.com  - prereqs installer" -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 
-# ── helper ──────────────────────────────────────────────────────────────────
+# --- helper -----------------------------------------------------------------
 function Install-Prereq {
     param(
         [string]$Name,
         [string]$WingetId,
-        [string]$TestCmd       # command to check if already installed
+        [string]$TestCmd
     )
     Write-Step $Name
     if ($TestCmd -and (Get-Command $TestCmd -ErrorAction SilentlyContinue)) {
@@ -36,10 +36,7 @@ function Install-Prereq {
         Write-Skip "$Name ($ver)"
         return
     }
-    winget install --id $WingetId `
-        --accept-source-agreements `
-        --accept-package-agreements `
-        --silent
+    winget install --id $WingetId --accept-source-agreements --accept-package-agreements --silent
     if ($LASTEXITCODE -eq 0) {
         Write-Ok "$Name installed."
     } else {
@@ -47,12 +44,12 @@ function Install-Prereq {
     }
 }
 
-# ── prerequisites ────────────────────────────────────────────────────────────
-Install-Prereq -Name "Git"            -WingetId "Git.Git"            -TestCmd "git"
-Install-Prereq -Name "Docker Desktop" -WingetId "Docker.DockerDesktop" -TestCmd "docker"
-Install-Prereq -Name "Python 3.13"   -WingetId "Python.Python.3.13" -TestCmd "python"
+# --- prerequisites ----------------------------------------------------------
+Install-Prereq -Name "Git"            -WingetId "Git.Git"              -TestCmd "git"
+Install-Prereq -Name "Docker Desktop" -WingetId "Docker.DockerDesktop"  -TestCmd "docker"
+Install-Prereq -Name "Python 3.13"    -WingetId "Python.Python.3.13"   -TestCmd "python"
 
-# ── done ─────────────────────────────────────────────────────────────────────
+# --- done -------------------------------------------------------------------
 Write-Host ""
 Write-Host "======================================" -ForegroundColor Green
 Write-Host "  All prerequisites installed!"        -ForegroundColor Green

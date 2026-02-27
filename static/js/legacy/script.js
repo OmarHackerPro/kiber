@@ -1403,13 +1403,14 @@
     });
   }
 
-  // ----- Breaking News Pagination -----
+  // ----- Breaking News Pagination (ticker headline, time left of arrows) -----
   const breakingPrev = document.querySelector('.breaking-prev');
   const breakingNext = document.querySelector('.breaking-next');
-  const breakingHeadline = document.querySelector('.breaking-headline');
+  const breakingHeadlineTexts = document.querySelectorAll('.breaking-headline-text');
+  const breakingTime = document.querySelector('.breaking-time');
   const breakingCounter = document.querySelector('.breaking-counter');
+  const breakingHeadlineInner = document.querySelector('.breaking-headline-inner');
   
-  // Array of breaking news items
   const breakingNews = [
     {
       headline: 'Critical Zero-Day in Popular VPN Software Being Actively Exploited',
@@ -1429,17 +1430,18 @@
   const totalBreakingNews = breakingNews.length;
   
   function updateBreakingNews() {
-    if (!breakingHeadline || !breakingCounter) return;
+    if (!breakingHeadlineTexts.length || !breakingCounter) return;
     
     const currentNews = breakingNews[currentBreakingIndex];
-    
-    // Update headline and time
-    breakingHeadline.innerHTML = currentNews.headline + ' <span class="breaking-time">' + currentNews.time + '</span>';
-    
-    // Update pagination counter
+    const headline = currentNews.headline;
+    breakingHeadlineTexts.forEach(el => { el.textContent = headline; });
+    if (breakingTime) breakingTime.textContent = currentNews.time;
     breakingCounter.textContent = (currentBreakingIndex + 1) + '/' + totalBreakingNews;
-    
-    // Update button states (disable at boundaries)
+    if (breakingHeadlineInner) {
+      breakingHeadlineInner.style.animation = 'none';
+      breakingHeadlineInner.offsetHeight;
+      breakingHeadlineInner.style.animation = '';
+    }
     if (breakingPrev) {
       breakingPrev.style.opacity = currentBreakingIndex === 0 ? '0.5' : '1';
       breakingPrev.style.cursor = currentBreakingIndex === 0 ? 'not-allowed' : 'pointer';

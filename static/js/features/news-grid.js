@@ -97,7 +97,11 @@
       'pentest': 'deep-dives',
       'malware': 'research',
       'breaches': 'dark-web',
-      'bug-bounty': 'beginner'
+      'bug-bounty': 'beginner',
+      'deep-dives': 'deep-dives',
+      'beginner': 'beginner',
+      'research': 'research',
+      'dark-web': 'dark-web'
     };
     window.currentMoreCategory = map[urlCategory] || null;
   }

@@ -1,12 +1,14 @@
 /**
- * Breaking news banner: pagination (prev/next)
+ * Breaking news banner: pagination (prev/next), ticker headline, time left of arrows
  */
 (function() {
   'use strict';
   var breakingPrev = document.querySelector('.breaking-prev');
   var breakingNext = document.querySelector('.breaking-next');
-  var breakingHeadline = document.querySelector('.breaking-headline');
+  var breakingHeadlineTexts = document.querySelectorAll('.breaking-headline-text');
+  var breakingTime = document.querySelector('.breaking-time');
   var breakingCounter = document.querySelector('.breaking-counter');
+  var breakingHeadlineInner = document.querySelector('.breaking-headline-inner');
 
   var breakingNews = [
     { headline: 'Critical Zero-Day in Popular VPN Software Being Actively Exploited', time: '19 minutes ago' },
@@ -18,10 +20,17 @@
   var totalBreakingNews = breakingNews.length;
 
   function updateBreakingNews() {
-    if (!breakingHeadline || !breakingCounter) return;
+    if (!breakingHeadlineTexts.length || !breakingCounter) return;
     var currentNews = breakingNews[currentBreakingIndex];
-    breakingHeadline.innerHTML = currentNews.headline + ' <span class="breaking-time">' + currentNews.time + '</span>';
+    var headline = currentNews.headline;
+    breakingHeadlineTexts.forEach(function(el) { el.textContent = headline; });
+    if (breakingTime) breakingTime.textContent = currentNews.time;
     breakingCounter.textContent = (currentBreakingIndex + 1) + '/' + totalBreakingNews;
+    if (breakingHeadlineInner) {
+      breakingHeadlineInner.style.animation = 'none';
+      breakingHeadlineInner.offsetHeight;
+      breakingHeadlineInner.style.animation = '';
+    }
     if (breakingPrev) {
       breakingPrev.style.opacity = currentBreakingIndex === 0 ? '0.5' : '1';
       breakingPrev.style.cursor = currentBreakingIndex === 0 ? 'not-allowed' : 'pointer';

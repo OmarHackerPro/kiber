@@ -375,6 +375,11 @@
   transition: background var(--transition);
 }
 
+a.more-card-option {
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
 .more-card-option i {
   color: var(--text-muted);
   width: 1.1em;

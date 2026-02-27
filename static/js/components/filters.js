@@ -147,6 +147,10 @@
 
     moreOptions.forEach(function (opt) {
       opt.addEventListener('click', function (e) {
+        if (opt.tagName === 'A') {
+          closeMore();
+          return;
+        }
         e.preventDefault();
         e.stopPropagation();
         moreOptions.forEach(function (o) { o.classList.remove('active'); });

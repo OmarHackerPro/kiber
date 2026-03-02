@@ -1,6 +1,18 @@
 # news.avild.com
 
-Security News & Threat Intelligence Platform — FastAPI backend, PostgreSQL database, Jinja2 templates.
+Security News & Threat Intelligence Platform — FastAPI backend, Nginx frontend, PostgreSQL database.
+
+---
+
+## Architecture
+
+| Service  | Technology      | Role                                      |
+| -------- | --------------- | ----------------------------------------- |
+| Frontend | Nginx           | Serves static HTML pages + CSS/JS assets  |
+| Backend  | FastAPI (Python)| REST API for news data                    |
+| Database | PostgreSQL 16   | Stores news articles                      |
+
+Nginx proxies `/api/` requests to the FastAPI backend and serves all HTML pages directly as static files.
 
 ---
 
@@ -9,11 +21,13 @@ Security News & Threat Intelligence Platform — FastAPI backend, PostgreSQL dat
 Git, Docker Desktop, and Python 3.13 are required. Run the script for your OS to install them all at once:
 
 **Windows** (PowerShell as Administrator):
+
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process; .\install-prereqs.ps1
 ```
 
 **macOS / Linux**:
+
 ```bash
 bash install-prereqs.sh
 ```
@@ -22,7 +36,26 @@ The scripts skip anything that's already installed. After running, **restart you
 
 ---
 
-## Local Setup
+## Running the Full Stack (Docker)
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+This builds and starts all three services. The site is available at <http://localhost>
+
+To stop:
+
+```bash
+docker compose down
+```
+
+---
+
+## Local Dev (Backend Only)
+
+For backend development without Docker:
 
 ### 1. Clone the repo
 
@@ -51,15 +84,11 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-The defaults in `.env` already match the Docker Compose database — no edits needed for local dev.
-
-### 4. Start the local database
+### 4. Start the database
 
 ```bash
-docker compose up -d
+docker compose up -d db
 ```
-
-This spins up a PostgreSQL 16 container on `localhost:5432` with the database `avild_news`.
 
 ### 5. Run database migrations
 
@@ -67,41 +96,48 @@ This spins up a PostgreSQL 16 container on `localhost:5432` with the database `a
 alembic upgrade head
 ```
 
-This creates all the tables. Run this again after any new migration is added.
-
 ### 6. Start the dev server
 
 ```bash
 uvicorn main:app --reload
 ```
 
-The app will be available at **http://localhost:8000**
+API available at <http://localhost:8000>
 
 ---
 
-## Key URLs (local)
+## Key URLs
 
-| URL | Description |
-|-----|-------------|
-| http://localhost:8000/ | Home page |
-| http://localhost:8000/category | Category page |
-| http://localhost:8000/docs | Swagger UI — interactive API explorer |
-| http://localhost:8000/redoc | ReDoc — readable API reference |
-| http://localhost:8000/api/news/ | News feed (JSON) |
-| http://localhost:8000/api/news/{id} | Single news item by ID |
+| URL                              | Description                       |
+| -------------------------------- | --------------------------------- |
+| <http://localhost/>              | Home page                         |
+| <http://localhost/category>      | Category / topic page             |
+| <http://localhost/search>        | Search                            |
+| <http://localhost/entity>        | Threat actor / entity page        |
+| <http://localhost/preferences>   | My Stack — source preferences     |
+| <http://localhost/rss-config>    | RSS feed configuration            |
+| <http://localhost/webhooks>      | Webhook settings                  |
+| <http://localhost/api/news/>     | News feed (JSON)                  |
+| <http://localhost/api/news/{id}> | Single news item by ID            |
+| <http://localhost:8000/docs>     | Swagger UI (backend dev only)     |
+| <http://localhost:8000/redoc>    | ReDoc (backend dev only)          |
 
 ---
 
 ## Project Structure
 
-```
+```text
 kiber/
 ├── main.py                  # FastAPI app entry point
 ├── requirements.txt
-├── docker-compose.yml       # Local Postgres
+├── docker-compose.yml       # Full stack: frontend + backend + db
+├── Dockerfile.backend       # FastAPI container
+├── Dockerfile.frontend      # Nginx container (serves static HTML)
 ├── install-prereqs.ps1      # One-command prereq installer (Windows)
 ├── install-prereqs.sh       # One-command prereq installer (macOS/Linux)
 ├── .env.example             # Environment template — copy to .env
+├── nginx/
+│   └── nginx.conf           # Nginx reverse proxy + static file config
 ├── alembic.ini              # Alembic config
 ├── alembic/
 │   └── versions/            # Database migration files
@@ -112,9 +148,31 @@ kiber/
 │   │   ├── base.py          # SQLAlchemy declarative base
 │   │   ├── models/          # ORM models
 │   │   └── session.py       # DB engine and session factory
-│   └── models/              # Pydantic response schemas
-├── templates/               # Jinja2 HTML templates
-└── static/                  # CSS, JS, assets
+│   ├── models/              # Pydantic response schemas
+│   └── ingestion/           # RSS feed ingestion pipeline
+├── scripts/
+│   └── ingest_feeds.py      # Standalone ingestion script
+├── templates/               # HTML pages (served by Nginx)
+│   ├── index.html
+│   └── category.html
+├── index.html               # Home (root-level, copied into Nginx)
+├── search.html
+├── entity.html
+├── preferences.html
+├── rss-config.html
+├── webhooks.html
+└── static/                  # CSS, JS, assets (served at /static/)
+    ├── css/
+    │   ├── base/            # CSS variables
+    │   ├── components/      # Component styles
+    │   ├── layout/          # Navbar, layout, responsive
+    │   ├── main/            # Main stylesheet entry
+    │   └── pages/           # Page-specific styles
+    └── js/
+        ├── components/      # UI component scripts
+        ├── core/            # Core loader
+        ├── data/            # Data / translations
+        └── features/        # Feature scripts (news grid, search, etc.)
 ```
 
 ---

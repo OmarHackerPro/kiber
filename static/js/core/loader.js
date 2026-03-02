@@ -64,6 +64,13 @@
       modalsWrap.innerHTML = modalsHtml;
       while (modalsWrap.firstChild) document.body.appendChild(modalsWrap.firstChild);
 
+      // Apply category filter after content is injected
+      setTimeout(function() {
+        if (typeof window.applyCategoryFilter === 'function') {
+          window.applyCategoryFilter();
+        }
+      }, 50);
+
       var scriptOrder = [
         'data/translations.js',
         'components/nav.js',
@@ -72,12 +79,19 @@
         'components/rss.js',
         'components/search-tooltip.js',
         'components/filters.js',
+        'features/category-filter.js',
         'features/news-grid.js',
         'features/news-modal.js',
+        'features/share-modal.js',
         'features/breaking.js',
         'features/sidebar.js'
       ];
-      return loadScriptsInOrder(scriptOrder);
+      return loadScriptsInOrder(scriptOrder).then(function() {
+        // Ensure category filter runs after all scripts are loaded
+        if (typeof window.applyCategoryFilter === 'function') {
+          window.applyCategoryFilter();
+        }
+      });
     });
   }
 

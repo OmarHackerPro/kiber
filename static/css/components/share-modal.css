@@ -1,0 +1,173 @@
+/* ===== Share Modal ===== */
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.share-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.share-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.share-modal__dialog {
+  position: relative;
+  width: min(440px, calc(100vw - 2rem));
+  margin: 2rem auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+}
+
+.share-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+
+.share-modal__close:hover {
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
+.share-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.share-modal__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.share-modal__access {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.share-access-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.share-access-option input { margin: 0; accent-color: var(--accent-green); }
+
+/* Access badges (reusable in modal, feed, detail) */
+.access-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.access-badge.private {
+  background: rgba(139, 148, 158, 0.2);
+  color: var(--text-muted);
+}
+
+.access-badge.link {
+  background: rgba(88, 166, 255, 0.15);
+  color: var(--accent-blue);
+}
+
+.access-badge.public {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--accent-green);
+}
+
+.card-access { margin-right: 0.35rem; }
+
+.share-modal__actions { margin-bottom: 0.5rem; }
+
+.share-modal__btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+
+.share-modal__btn:hover { opacity: 0.9; }
+
+.share-modal__btn--primary {
+  background: var(--accent-green);
+  color: #fff;
+}
+
+.share-modal__btn--secondary {
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.share-modal__btn--danger {
+  background: transparent;
+  color: var(--accent-red);
+  border: 1px solid var(--accent-red);
+}
+
+.share-modal__generated { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+.share-modal__link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.share-modal__input {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+}
+
+.share-modal__input:focus { outline: none; border-color: var(--accent-green); }
+
+@media (max-width: 480px) {
+  .share-modal__link-row { flex-direction: column; align-items: stretch; }
+  .share-modal__input { min-width: 0; }
+}

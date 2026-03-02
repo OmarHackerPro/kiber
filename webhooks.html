@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Webhooks - CyberNews</title>
+  <link rel="stylesheet" href="assets/css/main/main.css">
+  <link rel="stylesheet" href="assets/css/layout/navbar.css">
+  <link rel="stylesheet" href="assets/css/pages/webhooks.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <style>
+    .navbar { display: flex !important; flex-direction: column !important; }
+    .nav-top, .nav-bottom, .nav-actions, .nav-links { display: flex !important; visibility: visible !important; opacity: 1 !important; }
+    .nav-links { overflow-x: auto !important; }
+  </style>
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('theme-light');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-top">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select-native" aria-label="Language">
+          <option value="en" selected>English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+          <option value="zh">中文</option>
+          <option value="ru">Русский</option>
+          <option value="ar">العربية</option>
+          <option value="az">Azərbaycan</option>
+        </select>
+        <div class="lang-select-trigger" id="langTrigger" aria-expanded="false" aria-haspopup="listbox">
+          <i class="fas fa-globe lang-icon"></i>
+          <span class="lang-current" data-short="EN">EN</span>
+          <i class="fas fa-chevron-down lang-arrow"></i>
+        </div>
+        <div class="lang-dropdown" id="langDropdown" role="listbox">
+          <div class="lang-option selected" data-lang="en" data-short="EN" role="option">English</div>
+          <div class="lang-option" data-lang="es" data-short="ES" role="option">Español</div>
+          <div class="lang-option" data-lang="fr" data-short="FR" role="option">Français</div>
+          <div class="lang-option" data-lang="de" data-short="DE" role="option">Deutsch</div>
+          <div class="lang-option" data-lang="ja" data-short="JA" role="option">日本語</div>
+          <div class="lang-option" data-lang="zh" data-short="ZH" role="option">中文</div>
+          <div class="lang-option" data-lang="ru" data-short="RU" role="option">Русский</div>
+          <div class="lang-option" data-lang="ar" data-short="AR" role="option">العربية</div>
+          <div class="lang-option" data-lang="az" data-short="AZ" role="option">Azərbaycan</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="preferences.html" class="nav-subscribe-btn nav-pref-link"><i class="fas fa-layer-group"></i> <span data-i18n-key="nav.myStack">My Stack</span></a>
+        <a href="webhooks.html" class="nav-subscribe-btn nav-pref-link active"><i class="fas fa-plug"></i> <span data-i18n-key="nav.webhooks">Webhooks</span></a>
+        <a href="rss-config.html" class="nav-subscribe-btn nav-pref-link"><i class="fas fa-rss"></i> <span data-i18n-key="nav.rssConfig">RSS Feed</span></a>
+        <button type="button" class="nav-theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+          <span class="theme-icon">
+            <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="currentColor"/><line x1="12" y1="12" x2="12" y2="2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="2" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="5" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="19" y2="19" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="19" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="12" x2="5" y2="19" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="nav-bottom">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-logo-box"><i class="fas fa-shield-alt brand-icon"></i></span>
+        <span class="brand-text"><span class="brand-cyber">Cyber</span><span class="brand-news">News</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="search.html"><i class="fas fa-search nav-link-icon"></i> <span data-i18n-key="nav.search">Search</span></a></li>
+        <li><a href="index.html"><i class="fas fa-home nav-link-icon"></i> Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="layout">
+    <div class="content-area webhooks-page">
+      <h1 id="webhooks-page-title"><i class="fas fa-plug"></i> <span data-i18n-key="webhooks.title">Webhook configuration</span></h1>
+
+      <section class="webhook-section" aria-labelledby="create-title">
+        <h2 id="create-title" class="webhook-section-title"><i class="fas fa-plus-circle"></i> <span data-i18n-key="webhooks.createTitle">Create webhook</span></h2>
+        <form class="webhook-form" id="webhookForm" novalidate>
+          <div class="form-row">
+            <label for="webhookName"><span data-i18n-key="webhooks.nameLabel">Name</span> <span class="optional" data-i18n-key="webhooks.nameOptional">(optional)</span></label>
+            <input type="text" id="webhookName" name="name" autocomplete="off" placeholder="e.g. My integration">
+          </div>
+          <div class="form-row">
+            <label for="webhookUrl"><span data-i18n-key="webhooks.endpointLabel">Endpoint URL</span></label>
+            <input type="url" id="webhookUrl" name="url" required placeholder="https://example.com/webhook" aria-describedby="urlHint urlError">
+            <p id="urlHint" class="form-hint" data-i18n-key="webhooks.endpointHint">Must be HTTPS, no spaces.</p>
+            <p id="urlError" class="form-error" role="alert" aria-live="polite" hidden></p>
+          </div>
+          <div class="form-row">
+            <label><span data-i18n-key="webhooks.secretLabel">Secret / signing key</span></label>
+            <div class="webhook-secret-row">
+              <input type="text" id="webhookSecret" name="secret" readonly class="secret-masked" placeholder="Generate to copy once" aria-describedby="secretHint">
+              <button type="button" id="webhookGenSecret" class="btn-test" data-i18n-key="webhooks.generateSecret">Generate</button>
+              <button type="button" id="webhookCopySecret" class="btn-test" data-i18n-key="webhooks.copySecret" disabled>Copy (shown once)</button>
+            </div>
+            <p id="secretHint" class="form-hint">Recommended for verifying payloads. Masked after creation.</p>
+          </div>
+          <div class="form-row">
+            <span class="webhook-section-title" style="margin-bottom: 0.5rem;"><span data-i18n-key="webhooks.eventsLabel">Event types</span></span>
+            <div id="webhookEvents" class="webhook-events"></div>
+          </div>
+          <p class="webhook-retry-note" data-i18n-key="webhooks.payloadFormat">Payload format: JSON (versioned schema).</p>
+          <p class="webhook-retry-note" data-i18n-key="webhooks.retryNote">Retry: exponential backoff (default). Override in API if needed.</p>
+          <button type="submit" class="btn-primary" id="webhookSubmit" data-i18n-key="webhooks.createBtn">Create webhook</button>
+        </form>
+      </section>
+
+      <section class="webhook-section" aria-labelledby="manage-title">
+        <h2 id="manage-title" class="webhook-section-title"><i class="fas fa-list"></i> <span data-i18n-key="webhooks.manageTitle">Your webhooks</span></h2>
+        <div id="webhookList" class="webhook-list">
+          <!-- Empty state or cards injected by JS -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/data/translations.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/components/language.js"></script>
+  <script src="assets/js/components/theme.js"></script>
+  <script src="assets/js/data/webhooks.js"></script>
+  <script src="assets/js/features/webhooks-page.js"></script>
+</body>
+</html>

@@ -116,7 +116,7 @@
   flex-wrap: nowrap;
   position: relative;
   flex: 1 1 auto;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   white-space: nowrap;
   min-width: 0;
@@ -124,6 +124,7 @@
   overflow-y: visible;
   scrollbar-width: none !important;
   -webkit-overflow-scrolling: touch;
+  padding-inline-start: 0;
 }
 
 .nav-links::-webkit-scrollbar,
@@ -528,6 +529,34 @@ a.more-card-option {
 
 .nav-subscribe-btn i {
   font-size: 0.95rem;
+}
+
+.nav-share-btn,
+.nav-pref-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: inherit;
+  text-decoration: none;
+  color: var(--accent-green);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-share-btn:hover,
+.nav-pref-link:hover {
+  color: #7ee787;
+  background: rgba(63, 185, 80, 0.15);
+}
+
+.nav-pref-link.active {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--accent-green);
 }
 
 /* Theme toggle */

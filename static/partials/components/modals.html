@@ -11,3 +11,31 @@
   <span class="search-help-tooltip-line">Breaking news, threat intel, malware</span>
   <span class="search-help-tooltip-line">IOCs, threat actors, APT reports</span>
 </div>
+
+<!-- Share Insight modal -->
+<div class="share-modal" id="shareModal" aria-hidden="true" role="dialog" aria-labelledby="shareModalTitle" aria-modal="true">
+  <div class="share-modal__backdrop" data-share-close="true"></div>
+  <div class="share-modal__dialog">
+    <button type="button" class="share-modal__close" aria-label="Close" data-share-close="true"><i class="fas fa-times"></i></button>
+    <h2 id="shareModalTitle" class="share-modal__title" data-i18n-key="share.title">Share Insight</h2>
+    <div class="share-modal__body">
+      <p class="share-modal__label" data-i18n-key="share.access">Access</p>
+      <div class="share-modal__access" role="radiogroup" aria-label="Access level">
+        <label class="share-access-option"><input type="radio" name="shareAccess" value="private" checked> <span class="access-badge private"><i class="fas fa-lock"></i> <span data-i18n-key="share.private">Private</span></span></label>
+        <label class="share-access-option"><input type="radio" name="shareAccess" value="link"> <span class="access-badge link"><i class="fas fa-link"></i> <span data-i18n-key="share.anyoneWithLink">Anyone with link</span></span></label>
+        <label class="share-access-option"><input type="radio" name="shareAccess" value="public"> <span class="access-badge public"><i class="fas fa-globe"></i> <span data-i18n-key="share.public">Public</span></span></label>
+      </div>
+      <div class="share-modal__actions">
+        <button type="button" id="shareGenerateBtn" class="share-modal__btn share-modal__btn--primary" data-i18n-key="share.generateLink">Generate Link</button>
+      </div>
+      <div class="share-modal__generated" id="shareGenerated" hidden>
+        <p class="share-modal__label" data-i18n-key="share.shareableLink">Shareable link</p>
+        <div class="share-modal__link-row">
+          <input type="text" id="shareLinkInput" class="share-modal__input" readonly>
+          <button type="button" id="shareCopyBtn" class="share-modal__btn share-modal__btn--secondary" data-i18n-key="share.copy">Copy</button>
+          <button type="button" id="shareRevokeBtn" class="share-modal__btn share-modal__btn--danger" data-i18n-key="share.revoke">Revoke</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

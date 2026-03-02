@@ -6,11 +6,11 @@
   var translations = window.CyberNews && window.CyberNews.translations ? window.CyberNews.translations : { en: {} };
 
   var newsTemplates = [
-    { id: 'card1', tags: ['CISA', 'Critical'], title: 'CISA Adds Critical VPN Flaw to Known Exploited Catalog', desc: 'Federal agencies must patch within two weeks as attacks escalate.', keywords: ['CVE-2026-0001', 'VPN', 'RCE', 'Zero-Day'], time: '15m', severity: 'high', type: 'advisory', category: 'research' },
+    { id: 'card1', tags: ['CISA', 'Critical'], title: 'CISA Adds Critical VPN Flaw to Known Exploited Catalog', desc: 'Federal agencies must patch within two weeks as attacks escalate.', keywords: ['CVE-2026-0001', 'VPN', 'RCE', 'Zero-Day'], time: '15m', severity: 'high', type: 'advisory', category: 'research', access: 'link' },
     { id: 'card2', tags: ['Mandiant', 'Report'], title: 'APT41 Expands Supply Chain Attacks in 2026', desc: 'New report details evolving TTPs and infrastructure used by the group.', keywords: ['APT41', 'Supply Chain', 'Mandiant'], time: '3h 12m', severity: null, type: 'report', category: 'deep-dives' },
     { id: 'card3', tags: ['Ransomware'], title: 'New Ransomware Variant Targets Healthcare Sector', desc: 'Hospitals and clinics report encrypted systems and ransom demands.', keywords: ['Ransomware', 'Healthcare', 'Encryption'], time: '4h 25m', severity: 'high', type: 'news', category: 'research' },
     { id: 'card4', tags: ['CISA'], title: 'Emergency Directive: Patch VPN Zero-Day by Friday', desc: 'CISA orders federal agencies to apply vendor patches immediately.', keywords: ['CISA', 'Directive', 'VPN'], time: '5h', severity: null, type: 'advisory', category: 'research' },
-    { id: 'card5', tags: ['Bug Bounty', 'Report'], title: 'Major Bug Bounty Program Doubles Critical Payouts', desc: 'Platform announces increased rewards for critical vulnerabilities.', keywords: ['Bug Bounty', 'Payouts', 'Critical'], time: '6h 30m', severity: null, type: 'news', category: 'beginner' },
+    { id: 'card5', tags: ['Bug Bounty', 'Report'], title: 'Major Bug Bounty Program Doubles Critical Payouts', desc: 'Platform announces increased rewards for critical vulnerabilities.', keywords: ['Bug Bounty', 'Payouts', 'Critical'], time: '6h 30m', severity: null, type: 'news', category: 'beginner', access: 'public' },
     { id: 'card6', tags: ['APT29', 'Breaches'], title: 'APT29 Campaign Linked to Recent Government Breaches', desc: 'Intelligence agencies attribute multiple incidents to same actor.', keywords: ['APT29', 'Breach', 'Government'], time: '8h', severity: 'high', type: 'analysis', category: 'deep-dives' },
     { id: 'card7', tags: ['Malware', 'Critical'], title: 'Stealer Malware Spreads via Fake Software Updates', desc: 'Users tricked into installing trojanized installers from spoofed sites.', keywords: ['Malware', 'Stealer', 'Fake Updates'], time: '10h', severity: null, type: 'news', category: 'beginner' },
     { id: 'card8', tags: ['Pentest', 'Report'], title: 'Penetration Testing Framework Updated for Cloud', desc: 'New modules added for AWS, Azure, and GCP assessments.', keywords: ['Pentest', 'Cloud', 'AWS'], time: '12h', severity: null, type: 'report', category: 'deep-dives' },
@@ -57,7 +57,11 @@
     card.className = 'news-card';
     card.setAttribute('data-news-id', data.id || '');
     card.style.animationDelay = (index % 12) * 0.03 + 's';
-    var tagSpans = data.tags.map(function(t) {
+    var accessBadge = '';
+    if (data.access === 'private') accessBadge = '<span class="access-badge private card-access"><i class="fas fa-lock"></i> Private</span>';
+    else if (data.access === 'link') accessBadge = '<span class="access-badge link card-access"><i class="fas fa-link"></i> Link</span>';
+    else if (data.access === 'public') accessBadge = '<span class="access-badge public card-access"><i class="fas fa-globe"></i> Public</span>';
+    var tagSpans = (accessBadge ? accessBadge : '') + data.tags.map(function(t) {
       var c = t.toLowerCase().replace(/\s/g, '');
       return '<span class="card-tag ' + c + '">' + t + '</span>';
     }).join('');
@@ -108,25 +112,24 @@
 
   applyCategoryFromUrl();
 
-  window.applyFilters = function() {
+  function itemPassesFilter(item) {
     var typeVals = window.selectedTypes && window.selectedTypes.length > 0 ? window.selectedTypes : null;
     var sourcesVal = getSelectedFilterValue('sourcesDropdown');
     var category = window.currentMoreCategory || null;
     var breakingOnly = window.breakingOnly === true;
-    var filtered = loadedNewsList.filter(function(item) {
-      if (breakingOnly) {
-        if (item.severity !== 'high') return false;
-      } else {
-        if (typeVals && typeVals.length > 0) {
-          if (typeVals.indexOf(item.type) === -1) return false;
-        } else {
-          if (item.type !== 'news') return false;
-        }
-        if (sourcesVal && sourcesVal !== 'all' && item.type !== sourcesVal) return false;
-        if (category && item.category !== category) return false;
-      }
-      return true;
-    });
+    if (breakingOnly) return item.severity === 'high';
+    if (typeVals && typeVals.length > 0) {
+      if (typeVals.indexOf(item.type) === -1) return false;
+    } else {
+      if (item.type !== 'news') return false;
+    }
+    if (sourcesVal && sourcesVal !== 'all' && item.type !== sourcesVal) return false;
+    if (category && item.category !== category) return false;
+    return true;
+  }
+
+  window.applyFilters = function() {
+    var filtered = loadedNewsList.filter(itemPassesFilter);
     if (newsGrid) newsGrid.innerHTML = '';
     filtered.forEach(function(data, i) {
       if (newsGrid) newsGrid.appendChild(buildCard(data, i));
@@ -135,11 +138,19 @@
   };
 
   function appendNews(count) {
+    var startLen = loadedNewsList.length;
     for (var i = 0; i < count; i++) loadedNewsList.push(getNextNewsItem());
-    if (typeof window.applyFilters === 'function') window.applyFilters();
-    else {
-      loadedNewsList.forEach(function(data, i) {
-        if (newsGrid) newsGrid.appendChild(buildCard(data, i));
+    if (typeof window.applyFilters === 'function') {
+      var newItems = loadedNewsList.slice(startLen);
+      var toAppend = newItems.filter(itemPassesFilter);
+      toAppend.forEach(function(data, j) {
+        var idx = startLen + j;
+        if (newsGrid) newsGrid.appendChild(buildCard(data, idx));
+      });
+      if (loadIndicator) loadIndicator.classList.toggle('hidden', false);
+    } else {
+      loadedNewsList.slice(startLen).forEach(function(data, i) {
+        if (newsGrid) newsGrid.appendChild(buildCard(data, startLen + i));
       });
     }
   }

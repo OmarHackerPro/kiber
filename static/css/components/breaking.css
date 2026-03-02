@@ -11,10 +11,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .breaking-pill {
+  flex-shrink: 0;
   background: var(--accent-red);
   color: white;
   padding: 0.35rem 0.75rem;
@@ -22,53 +23,53 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  animation: pulse 2s ease-in-out infinite;
+  animation: breaking-pulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes breaking-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.85; }
 }
 
-.breaking-headline-wrap {
+.breaking-ticker-wrap {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-.breaking-headline-inner {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: breaking-ticker 8s linear infinite;
-}
-
-.breaking-headline-inner.paused {
+.breaking-ticker-wrap:hover .breaking-ticker-inner {
   animation-play-state: paused;
 }
 
-.breaking-headline-text {
-  padding-right: 2em;
+.breaking-ticker-inner {
+  display: flex;
+  width: max-content;
+  animation: breaking-ticker-scroll 50s linear infinite;
+  will-change: transform;
+}
+
+.breaking-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding-right: 3rem;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
-.breaking-headline-copy {
-  padding-right: 2em;
+/* Headlines move right (new from the left) */
+@keyframes breaking-ticker-scroll {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
-@keyframes breaking-ticker {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.breaking-right {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.breaking-ticker-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
@@ -76,6 +77,13 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   white-space: nowrap;
+}
+
+/* Legacy single-headline (if present) */
+.breaking-headline {
+  flex: 1;
+  font-size: 1rem;
+  min-width: 200px;
 }
 
 .breaking-pagination {

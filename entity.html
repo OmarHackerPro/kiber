@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google" content="notranslate">
-  <meta name="description" content="CyberNews delivers security news, threat intelligence, and analysis. Stay updated on breaches, APT, malware, and infosec.">
+  <meta name="description" content="Security entity and threat intelligence detail on CyberNews.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="index.html">
-  <title>CyberNews - Security News & Threat Intel</title>
+  <link rel="canonical" href="entity.html">
+  <title>Entity - CyberNews</title>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
-    {"@type":"Organization","@id":"https://schema.org/Organization#cybernews","name":"CyberNews","url":"https://cybernews.example.com/","logo":{"@type":"ImageObject","url":"https://cybernews.example.com/assets/img/logo.png"}},
-    {"@type":"WebSite","@id":"https://schema.org/WebSite#cybernews","name":"CyberNews","url":"https://cybernews.example.com/","publisher":{"@id":"https://schema.org/Organization#cybernews"},"description":"Security news and threat intelligence."}
+    {"@type":"WebPage","@id":"https://cybernews.example.com/entity.html","name":"Entity - CyberNews","url":"https://cybernews.example.com/entity.html","description":"Security entity and threat intelligence detail.","breadcrumb":{"@id":"#breadcrumb"}},
+    {"@type":"BreadcrumbList","@id":"#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cybernews.example.com/"},{"@type":"ListItem","position":2,"name":"Search","item":"https://cybernews.example.com/search.html"},{"@type":"ListItem","position":3,"name":"Entity","item":"https://cybernews.example.com/entity.html"}]},
+    {"@type":"Article","name":"Security Entity","description":"Threat intelligence and security entity details.","publisher":{"@type":"Organization","name":"CyberNews"}}
   ]}
   </script>
   <link rel="stylesheet" href="assets/css/main/main.css">
   <link rel="stylesheet" href="assets/css/layout/navbar.css">
+  <link rel="stylesheet" href="assets/css/pages/entity.css">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
   <style>
-    /* Critical: ensure navbar rows and actions always visible */
     .navbar { display: flex !important; flex-direction: column !important; }
     .nav-top { display: flex !important; visibility: visible !important; opacity: 1 !important; min-height: 44px !important; }
     .nav-bottom { display: flex !important; visibility: visible !important; opacity: 1 !important; min-height: 48px !important; }
@@ -68,8 +69,6 @@
       </div>
       <div class="nav-actions">
         <a href="preferences.html" class="nav-subscribe-btn nav-pref-link"><i class="fas fa-layer-group"></i> <span data-i18n-key="nav.myStack">My Stack</span></a>
-        <a href="webhooks.html" class="nav-subscribe-btn nav-pref-link"><i class="fas fa-plug"></i> <span data-i18n-key="nav.webhooks">Webhooks</span></a>
-        <a href="rss-config.html" class="nav-subscribe-btn nav-pref-link"><i class="fas fa-rss"></i> <span data-i18n-key="nav.rssConfig">RSS Feed</span></a>
         <div class="nav-rss-wrap">
           <button type="button" class="nav-rss-btn" id="rssTrigger" aria-expanded="false" aria-haspopup="true">
             <i class="fas fa-rss nav-rss-icon"></i> RSS <i class="fas fa-chevron-down"></i>
@@ -106,7 +105,7 @@
         <li><a href="category.html?category=apt"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span> <span data-i18n-key="nav.apt">APT</span></a></li>
         <li><a href="category.html?category=breaches"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></span> <span data-i18n-key="nav.breaches">Breaches</span></a></li>
         <li><a href="category.html?category=pentest"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span> <span data-i18n-key="nav.pentest">Pentest</span></a></li>
-        <li><a href="category.html?category=bug-bounty" class="active"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5c-2.2 0-4 1.8-4 4 0 1.2.5 2.3 1.3 3.1-.9 1.1-2 2-3.3 2.5v2c1.5-.5 3.2-1.1 4.5-2.5 1.3 1.4 3 2 4.5 2.5v-2c-1.3-.5-2.4-1.4-3.3-2.5.8-.8 1.3-1.9 1.3-3.1 0-2.2-1.8-4-4-4z"/><circle cx="9" cy="15" r="1.2"/><circle cx="15" cy="15" r="1.2"/><path d="M7 10l-2 1.5"/><path d="M17 10l2 1.5"/></svg></span> <span data-i18n-key="nav.bugBounty">Bounty</span></a></li>
+        <li><a href="category.html?category=bug-bounty"><span class="nav-link-icon" aria-hidden="true"><svg class="nav-icon-outline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5c-2.2 0-4 1.8-4 4 0 1.2.5 2.3 1.3 3.1-.9 1.1-2 2-3.3 2.5v2c1.5-.5 3.2-1.1 4.5-2.5 1.3 1.4 3 2 4.5 2.5v-2c-1.3-.5-2.4-1.4-3.3-2.5.8-.8 1.3-1.9 1.3-3.1 0-2.2-1.8-4-4-4z"/><circle cx="9" cy="15" r="1.2"/><circle cx="15" cy="15" r="1.2"/><path d="M7 10l-2 1.5"/><path d="M17 10l2 1.5"/></svg></span> <span data-i18n-key="nav.bugBounty">Bounty</span></a></li>
         <li class="nav-more-wrap">
           <button type="button" class="nav-more-btn" id="moreTrigger" aria-expanded="false" aria-haspopup="true"><span class="nav-more-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg></span> <span data-i18n-key="nav.more">More</span> <span class="nav-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
           <div class="more-dropdown-card" id="moreDropdown" role="menu">
@@ -119,31 +118,70 @@
       </ul>
       <div class="search-box nav-bottom-search">
         <i class="fas fa-search search-icon"></i>
-        <input type="text" id="navSearchInput" placeholder="Search news, IOCs, actors" autocomplete="off">
+        <input type="text" placeholder="Search news, IOCs, actors" autocomplete="off">
         <span class="search-help-wrap" id="searchHelpWrap" aria-describedby="search-help-tooltip-popup">
           <i class="fas fa-question-circle search-help" aria-hidden="true"></i>
           <span class="search-help-tooltip search-help-tooltip-inline" id="search-help-tooltip" role="tooltip" aria-hidden="true">
             <span class="search-help-tooltip-title">Search help</span>
-            <span class="search-help-tooltip-line">Breaking news, threat intel, malware</span>
-            <span class="search-help-tooltip-line">IOCs, threat actors, APT reports</span>
+            <span class="search-help-tooltip-line">Go to Search page for entities</span>
           </span>
         </span>
       </div>
     </div>
   </nav>
-  <script src="assets/js/core/loader.js"></script>
+
+  <main class="layout">
+    <div class="content-area entity-page">
+      <div id="entityPageContent" hidden></div>
+      <div id="entityNotFound" class="entity-not-found" hidden></div>
+    </div>
+  </main>
+
+  <script src="assets/js/data/translations.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/components/language.js"></script>
+  <script src="assets/js/components/theme.js"></script>
+  <script src="assets/js/data/mock-entities.js"></script>
+  <script src="assets/js/features/entity-page.js"></script>
+  <div class="share-modal" id="shareModal" aria-hidden="true" role="dialog" aria-labelledby="shareModalTitle" aria-modal="true">
+    <div class="share-modal__backdrop" data-share-close="true"></div>
+    <div class="share-modal__dialog">
+      <button type="button" class="share-modal__close" aria-label="Close" data-share-close="true"><i class="fas fa-times"></i></button>
+      <h2 id="shareModalTitle" class="share-modal__title" data-i18n-key="share.title">Share Insight</h2>
+      <div class="share-modal__body">
+        <p class="share-modal__label" data-i18n-key="share.access">Access</p>
+        <div class="share-modal__access" role="radiogroup" aria-label="Access level">
+          <label class="share-access-option"><input type="radio" name="shareAccess" value="private" checked> <span class="access-badge private"><i class="fas fa-lock"></i> <span data-i18n-key="share.private">Private</span></span></label>
+          <label class="share-access-option"><input type="radio" name="shareAccess" value="link"> <span class="access-badge link"><i class="fas fa-link"></i> <span data-i18n-key="share.anyoneWithLink">Anyone with link</span></span></label>
+          <label class="share-access-option"><input type="radio" name="shareAccess" value="public"> <span class="access-badge public"><i class="fas fa-globe"></i> <span data-i18n-key="share.public">Public</span></span></label>
+        </div>
+        <div class="share-modal__actions">
+          <button type="button" id="shareGenerateBtn" class="share-modal__btn share-modal__btn--primary" data-i18n-key="share.generateLink">Generate Link</button>
+        </div>
+        <div class="share-modal__generated" id="shareGenerated" hidden>
+          <p class="share-modal__label" data-i18n-key="share.shareableLink">Shareable link</p>
+          <div class="share-modal__link-row">
+            <input type="text" id="shareLinkInput" class="share-modal__input" readonly>
+            <button type="button" id="shareCopyBtn" class="share-modal__btn share-modal__btn--secondary" data-i18n-key="share.copy">Copy</button>
+            <button type="button" id="shareRevokeBtn" class="share-modal__btn share-modal__btn--danger" data-i18n-key="share.revoke">Revoke</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/features/share-modal.js"></script>
   <script>
     (function() {
-      document.addEventListener('DOMContentLoaded', function() {
-        var input = document.getElementById('navSearchInput');
-        if (input) input.addEventListener('keydown', function(e) {
+      var navInput = document.querySelector('.nav-bottom-search input');
+      if (navInput) {
+        navInput.addEventListener('keydown', function(e) {
           if (e.key === 'Enter') {
             e.preventDefault();
-            var q = input.value.trim();
-            window.location.href = q ? 'search.html?q=' + encodeURIComponent(q) : 'search.html';
+            var val = navInput.value.trim();
+            window.location.href = val ? 'search.html?q=' + encodeURIComponent(val) : 'search.html';
           }
         });
-      });
+      }
     })();
   </script>
 </body>
